@@ -1,48 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import src1 from './assets/1.jpg';
-import src2 from './assets/2.jpg';
-import src3 from './assets/3.jpg';
+import StudentList from './components/StudentList'
 
-let index = 0;
-
-const srcs = [src1, src2, src3];
-let timer = null;
-const rootDom = document.getElementById('root');
-
-function render() {
-    ReactDOM.render((
-        <img src={srcs[index]} alt={'第'+ index + '图片'}/>
-    ), rootDom);
-}
-
-function start(){
-    clearInterval(timer);
-    timer = setInterval(() => {
-        index = (index + 1) % srcs.length;  
-        render();  
-    }, 1000)
-}
-
-function stop(){
-    clearInterval(timer);
-}
-
-
-rootDom.onmouseenter = function () {
-    stop();
-    console.log('进入');
-}
-
-
-rootDom.onmouseleave = function () {
+async function getData(){
+    return await fetch('http://open.duyiedu.com/api/student/findAll?appkey=17596122336_1569677773123').then(res => res.json()).then(res => res.data);
     
-    start();
-    console.log('溢出');
 }
 
 
-start();
+async function render(){
+    ReactDOM.render((
+        "正在加载中"
+    ), document.getElementById('root'))
+    const data = await getData();
+    console.log(data);
+    ReactDOM.render((
+        <StudentList stus={data}></StudentList>
+    ), document.getElementById('root'))
+}
 
 render();
