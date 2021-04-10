@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import BallList from './components/BallList';
+import PageControl from './components/PageControl'
 
 
 ReactDOM.render((
-    <BallList  />
+    <PageControl />
 ), document.getElementById('root'))
