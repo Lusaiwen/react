@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PageControl from './components/PageControl'
+import Test from './components/Test'
 
 
 ReactDOM.render((
-    <PageControl />
+    <Test />
 ), document.getElementById('root'))
