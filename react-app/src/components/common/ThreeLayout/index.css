@@ -1,0 +1,19 @@
+.three-layout {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+
+.three-layout .aside-left {
+    order: 1;
+}
+
+.three-layout .main {
+    order: 2;
+    flex: 1 1 auto;
+}
+
+.three-layout .aside-right {
+    order: 3;
+}
