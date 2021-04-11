@@ -10,7 +10,7 @@ export default class PageControl extends Component {
         limit: 5,
         pannerNumber: 5,
         students: [],
-        isLoading: false
+        isLoading: true
     };
 
     constructor(props) {
@@ -19,11 +19,6 @@ export default class PageControl extends Component {
     }
 
     async getData(page = 1, size = 5) {
-        this.setState(cur => {
-            return {
-                isLoading: true
-            }
-        })
         const resp = await fetch(
             `http://open.duyiedu.com/api/student/findByPage?appkey=17596122336_1569677773123&page=${page}&size=${size}`
         )
