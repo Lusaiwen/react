@@ -2,11 +2,11 @@ import React from 'react';
 import './index.css';
 
 export default function Modal(props) {
-    let defaultProps = {
+    const defaultProps = {
         bg: 'rgba(0,0,0,.5)',
     };
-    let datas = { ...defaultProps, ...props };
-
+    const datas = Object.assign({}, defaultProps, props);
+    console.log(datas);
     return (
         <div
             className="modal"
