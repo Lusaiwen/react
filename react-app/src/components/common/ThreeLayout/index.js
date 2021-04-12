@@ -1,5 +1,6 @@
 import React  from 'react';
 import types from '../../../utils/commomTypes'
+import PropTypes from 'prop-types'
 import './index.css';
 
 
@@ -12,12 +13,12 @@ ThreeLayout.defaultProps = {
 
 
 ThreeLayout.propTypes = {
-    leftWidth: types.leftWidth,
-    rightWidth: types.rightWidth,
-    minWidth: types.minWidth,
-    gap: types.gap,
-    left: types.left,
-    right: types.right,
+    leftWidth: PropTypes.number,
+    rightWidth: PropTypes.number,
+    minWidth: PropTypes.number,
+    gap: PropTypes.number,
+    left: PropTypes.node,
+    right: PropTypes.node,
     children: types.children
 }
 

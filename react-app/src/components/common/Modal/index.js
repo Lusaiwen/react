@@ -11,8 +11,8 @@ Modal.defaultProps = {
 
 Modal.propTypes = {
     bg: PropTypes.string,
-    children: PropTypes.node,
-    onClose: types.onClose.isRequired
+    children: types.children,
+    onClose: PropTypes.func.isRequired
 }
 
 

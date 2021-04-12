@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import types from '../../../utils/commomTypes'
+import PropTypes from 'prop-types'
 
 export default class RadioBoxGroup extends Component {
 
@@ -11,7 +12,7 @@ export default class RadioBoxGroup extends Component {
         datas: types.datas.isRequired,
         value: types.value.isRequired,
         name: types.name.isRequired,
-        onChange: types.onChange.isRequired
+        onChange: PropTypes.func.isRequired
     }
 
     getRadioBoxes(){

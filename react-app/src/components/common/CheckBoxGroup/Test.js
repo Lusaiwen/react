@@ -18,7 +18,7 @@ export default class Test extends Component {
         return (
             <div>
                 <CheckBoxGroup
-                    // {...this.state}
+                    {...this.state}
                     onChange={(newArr) => {
                         this.setState({
                             chooseDatas: newArr,

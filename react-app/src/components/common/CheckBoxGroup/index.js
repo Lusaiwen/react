@@ -12,7 +12,7 @@ export default class CheckBoxGroup extends Component {
         datas: types.datas.isRequired,
         chooseDatas: types.chooseDatas.isRequired,
         name: PropTypes.string.isRequired,
-        onChange: types.onChange.isRequired
+        onChange: PropTypes.func.isRequired
     }
 
 
