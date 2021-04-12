@@ -15,11 +15,10 @@ export default class Test extends Component {
     };
 
     render() {
-        console.log('fdsgds', this.state);
         return (
             <div>
                 <CheckBoxGroup
-                    {...this.state}
+                    // {...this.state}
                     onChange={(newArr) => {
                         this.setState({
                             chooseDatas: newArr,

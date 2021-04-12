@@ -1,28 +1,40 @@
 import React from 'react';
+import types from '../../../utils/commomTypes'
+import PropTypes from 'prop-types'
 import './index.css';
 
+
+Modal.defaultProps = {
+    bg: 'rgba(0,0,0,.5)',
+    children: '正在加载中'
+}
+
+Modal.propTypes = {
+    bg: PropTypes.string,
+    children: PropTypes.node,
+    onClose: types.onClose.isRequired
+}
+
+
+
 export default function Modal(props) {
-    const defaultProps = {
-        bg: 'rgba(0,0,0,.5)',
-    };
-    console.log(props);
-    const datas = Object.assign({}, defaultProps, props);
-    console.log(datas);
     return (
         <div
             className="modal"
             style={{
-                background: datas.bg,
+                background: props.bg,
             }}
             onClick={(e) => {
                 if (e.target.className === 'modal') {
-                    datas.onClose && datas.onClose();
+                    props.onClose && props.onClose();
                 }
             }}
         >
             <div className="modal-center">
-                {datas.children  || '正在加载中'}
+                {props.children}
             </div>
         </div>
     );
 }
+
+

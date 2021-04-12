@@ -1,10 +1,25 @@
 import React, { Component } from 'react'
+import types from '../../../utils/commomTypes'
+import PropTypes from 'prop-types'
 
 export default class CheckBoxGroup extends Component {
 
+    static defaultProps = {
+
+    }
+
+    static propTypes = {
+        datas: types.datas.isRequired,
+        chooseDatas: types.chooseDatas.isRequired,
+        name: PropTypes.string.isRequired,
+        onChange: types.onChange.isRequired
+    }
 
 
     getCheckBoxes(){
+        if(!this.props.datas){
+            return null;
+        }
         return this.props.datas.map(item => 
             (<label key={item.value}>
                 <input type="checkbox" 

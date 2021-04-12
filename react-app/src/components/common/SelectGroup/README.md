@@ -4,7 +4,6 @@
 2. datas: 一个对象数组
     1. value 值
     2. text 文本
-
 ```js
 [
     { value: 'football', text: '足球' },

@@ -1,8 +1,23 @@
 import React, { Component } from 'react'
+import types from '../../../utils/commomTypes'
 
 export default class RadioBoxGroup extends Component {
 
+    static defaultProps = {
+
+    }
+
+    static propTypes = {
+        datas: types.datas.isRequired,
+        value: types.value.isRequired,
+        name: types.name.isRequired,
+        onChange: types.onChange.isRequired
+    }
+
     getRadioBoxes(){
+        if(!this.props.datas) {
+            return null;
+        }
         return this.props.datas.map(item => 
             (<label key={item.value}>
                 <input type="radio" 

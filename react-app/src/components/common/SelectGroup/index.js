@@ -1,9 +1,20 @@
 import React, { Component } from 'react'
+import types from '../../../utils/commomTypes'
 
 export default class SelectGroup extends Component {
 
+    static defaultProps = {
+
+    }
+
+    static propTypes = {
+        datas: types.datas.isRequired,
+        value: types.value.isRequired,
+        name: types.name.isRequired,
+        onChange: types.onChange.isRequired
+    }
+
     getOptions(){
-        console.log("select",this.props);
         return this.props.datas.map(item => 
             ( <option value={item.value} key={item.value} >{item.text}</option> )
         )
@@ -16,7 +27,6 @@ export default class SelectGroup extends Component {
 
     render() {
         const options = this.getOptions();
-        console.log(options);
         return (
             <div>
                 <select name={this.props.name} value={this.props.value} onChange={this.handleChange} >

@@ -1,6 +1,6 @@
 **属性**
 
-1. chooseData：选中的元素
+1. chooseDatas：选中的元素
 2. datas: 一个对象数组
     1. value 多选框的值
     2. text 多选框的文本
