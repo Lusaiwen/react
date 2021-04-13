@@ -1,46 +1,36 @@
-import React, { Component } from 'react'
-import types from '../../../utils/commomTypes'
+import React, { Component } from 'react';
+import types from '../../../utils/commomTypes';
+import WithDatasGroup from '../hoc/WithDatasGroup';
+import PropTypes from 'prop-types'
 
-export default class RadioBoxGroup extends Component {
-
-    static defaultProps = {
-
-    }
-
+class Radio extends Component {
     static propTypes = {
-        datas: types.datas.isRequired,
         value: types.value.isRequired,
         name: types.name.isRequired,
-        onChange: types.onChange.isRequired
-    }
-
-    getRadioBoxes(){
-        if(!this.props.datas) {
-            return null;
-        }
-        return this.props.datas.map(item => 
-            (<label key={item.value}>
-                <input type="radio" 
-                    name={this.props.name}
-                    value={item.value}
-                    onChange={this.handleChange}
-                />
-                {item.text}
-            </label>)
-        )
-    }
+        onChange: types.onChange.isRequired,
+        info: PropTypes.shape({
+            value: PropTypes.string.isRequired,
+            text: PropTypes.string.isRequired
+        })
+    };
 
     handleChange = e => {
         this.props.onChange && this.props.onChange(e.target.value, this.props, e);
     }
-
-
     render() {
-        const checkboxes = this.getRadioBoxes();
         return (
-            <div>
-                {checkboxes}
-            </div>
-        )
+            <label key={this.props.value}>
+                <input
+                    type="radio"
+                    name={this.props.name}
+                    value={this.props.info.value}
+                    onChange={this.handleChange}
+                    checked={this.props.info.value === this.props.value}
+                />
+                {this.props.info.text}
+            </label>
+        );
     }
 }
+
+export default WithDatasGroup(Radio);

@@ -1,38 +1,52 @@
-import React, { Component } from 'react'
-import types from '../../../utils/commomTypes'
+import React, { Component } from 'react';
+import types from '../../../utils/commomTypes';
+import PropTypes from 'prop-types';
+import WithDatasGroup from '../hoc/WithDatasGroup';
 
-export default class SelectGroup extends Component {
-
-    static defaultProps = {
-
-    }
+class Option extends Component {
+    static defaultProps = {};
 
     static propTypes = {
-        datas: types.datas.isRequired,
-        value: types.value.isRequired,
-        name: types.name.isRequired,
-        onChange: types.onChange.isRequired
-    }
-
-    getOptions(){
-        return this.props.datas.map(item => 
-            ( <option value={item.value} key={item.value} >{item.text}</option> )
-        )
-    }
-
-    handleChange = e => {
-        this.props.onChange && this.props.onChange(e.target.value, this.props, e);
-    }
-
+        info: PropTypes.shape({
+            value: PropTypes.string.isRequired,
+            text: PropTypes.string.isRequired
+        })
+    };
 
     render() {
-        const options = this.getOptions();
         return (
-            <div>
-                <select name={this.props.name} value={this.props.value} onChange={this.handleChange} >
-                    {options}
-                </select>
-            </div>
+            <option value={this.props.info.value}>
+                {this.props.info.text}
+            </option>
+        );
+    }
+}
+
+const OptGroup = WithDatasGroup(Option);
+
+class Select extends Component {
+
+    static propTypes = {
+        name: types.name.isRequired,
+        value: types.value.isRequired,
+        onChange: PropTypes.func.isRequired
+    };
+
+
+
+    render(){
+        return (
+            <select name={this.props.name} value={this.props.value}
+            onChange={e => {
+                this.props.onChange && this.props.onChange(e.target.value)
+            }}
+            >
+                <OptGroup {...this.props}></OptGroup>
+            </select>
         )
     }
 }
+
+
+
+export default Select;

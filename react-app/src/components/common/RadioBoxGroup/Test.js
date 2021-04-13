@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CheckBox from './index';
+import Radios from './index';
 
 export default class Test extends Component {
     state = {
@@ -10,14 +10,14 @@ export default class Test extends Component {
             { value: 'music', text: '音乐' },
             { value: 'other', text: '其他' },
         ],
-        value: '',
+        value: 'music',
         name: 'loves',
     };
 
     render() {
         return (
             <div>
-                <CheckBox
+                <Radios
                     {...this.state}
                     onChange={(newValue) => {
                         this.setState({

@@ -1,55 +1,50 @@
-import React, { Component } from 'react'
-import types from '../../../utils/commomTypes'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import types from '../../../utils/commomTypes';
+import PropTypes from 'prop-types';
+import WithDatasGroup from './hoc/WithDatasGroup';
 
-export default class CheckBoxGroup extends Component {
-
-    static defaultProps = {
-
-    }
-
+class CheckBox extends Component {
     static propTypes = {
-        datas: types.datas.isRequired,
+        info: PropTypes.shape({
+            value: PropTypes.string,
+            text: PropTypes.string,
+        }),
         chooseDatas: types.chooseDatas.isRequired,
         name: PropTypes.string.isRequired,
-        onChange: types.onChange.isRequired
-    }
+        onChange: PropTypes.func.isRequired,
+    };
 
-
-    getCheckBoxes(){
-        if(!this.props.datas){
-            return null;
-        }
-        return this.props.datas.map(item => 
-            (<label key={item.value}>
-                <input type="checkbox" 
-                    name={this.props.name}
-                    value={item.value}
-                    checked={this.props.chooseDatas.includes(item.value)}
-                    onChange={this.handleChange}
-                />
-                {item.text}
-            </label>)
-        )
-    }
-
-    handleChange = e => {
-        let newArr = [];
-        if(e.target.checked){
+    handleChange = (e) => {
+        let newArr = null;
+        if (e.target.checked) {
             newArr = [...this.props.chooseDatas, e.target.value];
-        }else {
-            newArr = this.props.chooseDatas.filter(item => item !== e.target.value)
+        } else {
+            newArr = this.props.chooseDatas.filter(
+                (item) => item !== e.target.value
+            );
         }
         this.props.onChange && this.props.onChange(newArr, this.props, e);
-    }
-
+    };
 
     render() {
-        const checkboxes = this.getCheckBoxes();
         return (
-            <div>
-                {checkboxes}
-            </div>
-        )
+            <label>
+                <input
+                    type="checkbox"
+                    name={this.props.name}
+                    value={this.props.info.value}
+                    checked={this.props.chooseDatas.includes(
+                        this.props.info.value
+                    )}
+                    onChange={this.handleChange}
+                />
+                {this.props.info.text}
+            </label>
+        );
     }
 }
+
+
+export default WithDatasGroup(CheckBox);
+
+
