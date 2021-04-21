@@ -1,45 +1,30 @@
-import React, { PureComponent } from 'react';
-import WithMouseListener from './WithMouseLisener';
+import React, { useState } from 'react';
 
-function MouseMoveDiv(props) {
-        console.log(props);
-        return (
-            <div
-                style={{
-                    width: 100,
-                    height: 100,
-                    position: 'absolute',
-                    left: props.x - 50,
-                    top: props.y - 50,
-                    background: '#ccc',
+export default function App() {
+    const [n, setN] = useState(0);
+    return ( 
+        <div>
+            <button
+                onClick={() => {
+                    
+                    setN(n - 2);
+                    setN(n - 1);
                 }}
-            ></div>
-        );
-}
-
-
-
-
-function MouseMovePoint(props){
-        return (
-            <>
-                横坐标： {props.x} 纵坐标： {props.y}
-            </>
-        );
-}
-
-const MouseDiv = WithMouseListener(MouseMoveDiv);
-const MousePoint = WithMouseListener(MouseMovePoint);
-
-
-export default class App extends PureComponent {
-    render() {
-        console.log('app render');
-        return (
-            <div>
-                <MousePoint/>
-                <MouseDiv/>
-            </div>
-        );
-    }
+            >
+                -
+            </button>
+            {n}
+            <button
+                onClick={() => {
+                    //当要运行多次时使用函数
+                    setN(prevN => prevN + 1);
+                    setN(prevN => prevN + 2);
+                    // setN(n + 2);
+                    // setN(n + 1);
+                }}
+            >
+                +
+            </button>
+        </div>
+    );
 }
