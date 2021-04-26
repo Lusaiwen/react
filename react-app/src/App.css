@@ -1,15 +1,42 @@
-.entering {
-    opacity: 1
+
+.container{
+    width: 100px;
+    margin: 0 auto;
+    position: relative;
 }
 
-.entered {
-    opacity: 1
+.title {
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
-.exiting {
-    opacity: 0
+.enter, .appear{
+    display: block;
+    transform: translateX(100px);
+    opacity: 0;
 }
 
-.exited {
-    opacity: 0
+.enter-active, .appear-active {
+    transition: 1s;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.enter-done, .appear-done {
+    opacity: 1;
+}
+
+.exit {
+    opacity: 1;
+}
+
+.exit-active {
+    transform: translateX(-100px);
+    opacity: 0;
+    transition: 1s;
+}
+
+.exit-done{
+    display: none;
 }

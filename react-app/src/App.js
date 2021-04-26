@@ -1,28 +1,42 @@
 import React, { useState } from 'react';
-import { Transition } from 'react-transition-group';
-import './App.css'
+import { CSSTransition } from 'react-transition-group';
+import './App.css';
 
-const duration = 300;
+function MyComp({ visible, children }) {
+    return (
+        <CSSTransition appear mountOnEnter in={visible} timeout={500}>
+            {children}
+        </CSSTransition>
+    );
+}
 
+function Comp1() {
+    return <h1 className="title">组件1</h1>;
+}
+
+function Comp2() {
+    return <h1 className="title">组件2</h1>;
+}
 
 export default function App() {
-    const [inProp, setInProp] = useState(false);
+    const [visible, setVisible] = useState(true);
+
     return (
-        <div>
-            <Transition in={inProp} timeout={500} addEndListener={(node, done) => {
-                console.log(node, done);
-            }}>
-                {(state) => {
-                    console.log(state);
-                    return (
-                        <div className={state +  ' fetch'}
-                        >
-                            I'm a fade Transition!
-                        </div>
-                    );
+        <div className="container">
+            <MyComp visible={visible}>
+                <Comp1 />
+            </MyComp>
+            <MyComp visible={!visible}>
+                <Comp2 />
+            </MyComp>
+
+            <button
+                onClick={() => {
+                    setVisible(!visible);
                 }}
-            </Transition>
-            <button onClick={() => setInProp(!inProp)}>Click to Enter</button>
+            >
+                切换显示
+            </button>
         </div>
     );
 }
