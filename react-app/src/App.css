@@ -1,42 +1,15 @@
 
 .container{
-    width: 100px;
+    width: 500px;
+    height: 200px;
     margin: 0 auto;
     position: relative;
+    overflow: hidden;
 }
 
 .title {
     position: absolute;
     top: 0;
-    left: 0;
-}
-
-.enter, .appear{
-    display: block;
-    transform: translateX(100px);
-    opacity: 0;
-}
-
-.enter-active, .appear-active {
-    transition: 1s;
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.enter-done, .appear-done {
-    opacity: 1;
-}
-
-.exit {
-    opacity: 1;
-}
-
-.exit-active {
-    transform: translateX(-100px);
-    opacity: 0;
-    transition: 1s;
-}
-
-.exit-done{
-    display: none;
+    left: 50%;
+    transform: translateX(-50%);
 }

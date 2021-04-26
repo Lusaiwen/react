@@ -1,21 +1,14 @@
 import React, { useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import { SwitchTransition, CSSTransition } from 'react-transition-group';
 import './App.css';
-
-function MyComp({ visible, children }) {
-    return (
-        <CSSTransition appear mountOnEnter in={visible} timeout={500}>
-            {children}
-        </CSSTransition>
-    );
-}
+import 'animate.css';
 
 function Comp1() {
-    return <h1 className="title">组件1</h1>;
+    return <h1 className="title animate__animated">组件1</h1>;
 }
 
 function Comp2() {
-    return <h1 className="title">组件2</h1>;
+    return <h1 className="title animate__animated">组件2</h1>;
 }
 
 export default function App() {
@@ -23,12 +16,20 @@ export default function App() {
 
     return (
         <div className="container">
-            <MyComp visible={visible}>
-                <Comp1 />
-            </MyComp>
-            <MyComp visible={!visible}>
-                <Comp2 />
-            </MyComp>
+            <SwitchTransition>
+                <CSSTransition
+                    appear
+                    mountOnEnter
+                    timeout={800}
+                    key={visible}
+                    classNames={{
+                        enter: "animate__backInRight",
+                        exit: "animate__backOutLeft",
+                    }}
+                >
+                    {visible ? <Comp1/> : <Comp2/>}
+                </CSSTransition>
+            </SwitchTransition>
 
             <button
                 onClick={() => {
