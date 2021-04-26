@@ -1,43 +1,39 @@
 import React, { useState } from 'react';
-import { SwitchTransition, CSSTransition } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import './App.css';
 import 'animate.css';
-
-function Comp1() {
-    return <h1 className="title animate__animated">组件1</h1>;
-}
-
-function Comp2() {
-    return <h1 className="title animate__animated">组件2</h1>;
-}
+import { v4 as uuidv4 } from 'uuid';
 
 export default function App() {
-    const [visible, setVisible] = useState(true);
+    const [tasks, setTasks] = useState([
+        { name: '任务一', id: uuidv4() },
+        { name: '任务二', id: uuidv4() },
+    ]);
 
     return (
-        <div className="container">
-            <SwitchTransition>
-                <CSSTransition
-                    appear
-                    mountOnEnter
-                    timeout={800}
-                    key={visible}
-                    classNames={{
-                        enter: "animate__backInRight",
-                        exit: "animate__backOutLeft",
-                    }}
-                >
-                    {visible ? <Comp1/> : <Comp2/>}
-                </CSSTransition>
-            </SwitchTransition>
-
-            <button
-                onClick={() => {
-                    setVisible(!visible);
-                }}
-            >
-                切换显示
-            </button>
-        </div>
+        <>
+            <TransitionGroup>
+                {tasks.map((it) => (
+                    <CSSTransition key={it.id} timeout={1000}>
+                        <div>
+                            {it.name}{' '}
+                            <button
+                                onClick={() => {
+                                    setTasks(
+                                        tasks.filter((t) => it.id !== t.id)
+                                    );
+                                }}
+                            >
+                                删除
+                            </button>
+                        </div>
+                    </CSSTransition>
+                ))}
+            </TransitionGroup>
+            <button onClick={() => {
+                const name = window.prompt('请输入任务名称');
+                setTasks([...tasks, {name: name, id: uuidv4()}])
+            }}>添加一个任务</button>
+        </>
     );
 }

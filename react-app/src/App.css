@@ -1,15 +1,22 @@
 
-.container{
-    width: 500px;
-    height: 200px;
-    margin: 0 auto;
-    position: relative;
-    overflow: hidden;
+
+.exit{
+    /*导致回流*/
+    transform-origin: left top; 
+    transform: scale(1);
 }
 
-.title {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+.exit-active {
+    transform: scale(0);
+    transition: 1s;
+}
+
+.enter {
+    transform: scale(0);
+    transform-origin: left top; 
+}
+
+.enter-active {
+    transform: scale(1);
+    transition: 1s;
 }
