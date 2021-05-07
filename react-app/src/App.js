@@ -4,48 +4,63 @@ import {
     Route,
     Link,
     Redirect,
+    Switch,
 } from 'react-router-dom';
-import config from './RouteConfig';
+import ProtectRoute from './ProtectRoute'
+import loginInfo from './loginInfo'
 
-console.log(config);
-
-function User() {
+function Home() {
     return (
         <div>
-            <h1>user用户区域</h1>
-            <div>
-                <Link to={config.user.update}>用户信息</Link>
-                <Link to={config.user.pay.root}>充值</Link>
-            </div>
-            <div
-                style={{
-                    width: 500,
-                    height: 500,
-                    border: '1px solid #000',
-                }}
-            >
-                <Route path={config.user.update} component={UserUpdate}></Route>
-                <Route path={config.user.pay.root} component={UserPay}></Route>
-            </div>
+            <h1>首页</h1>
         </div>
     );
 }
 
-function UserPay() {
-    return <h1>用户支付</h1>;
+function Personal() {
+    return (
+        <div>
+            <h1>个人中心</h1>
+        </div>
+    );
 }
 
-function UserUpdate() {
-    return <h1>用户信息更新</h1>;
+function Login(props) {
+    return (
+        <div>
+            <h1>登陆页面</h1>
+            <button onClick={() => {
+                loginInfo.isLogin = true;
+                if(props.location.state){
+                    props.history.push(props.location.state)
+                }else {
+                    props.history.push("/");
+                }
+            }}>登录</button>
+        </div>
+    );
 }
 
 export default function App() {
     return (
-        <div>
-            <Router>
-                <Route path={config.user.root} component={User}></Route>
-                <Redirect to={config.user.root} component={User} />
-            </Router>
-        </div>
+        <Router>
+            <ul>
+                <li>
+                    <Link to="/">首页</Link>
+                </li>
+                <li>
+                    <Link to="/login">登录</Link>
+                </li>
+                <li>
+                    <Link to="/personal">个人中心</Link>
+                </li>
+            </ul>
+
+            <Switch>
+                <Route path="/login" component={Login}></Route>
+                <ProtectRoute path="/personal" component={Personal}></ProtectRoute>
+                <Route path="/" component={Home} />
+            </Switch>
+        </Router>
     );
 }
