@@ -40,4 +40,5 @@
     right: 0;
     background-color: #fff;
     padding: 30px;
+    overflow: auto;
 }

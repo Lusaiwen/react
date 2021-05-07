@@ -12,7 +12,7 @@ import {Route} from 'react-router-dom'
 export default function Admin() {
     return (
         <div>
-            <Layout header={<Header/>}  aside={<Aside/>}  >
+            <Layout header={<Header/>}  aside={<Aside/>}>
                 <Route path="/" component={Welcome} exact />
                 <Route path="/students"  exact component={ StudentLists} />
                 <Route path="/students/add" exact  component={ StudentAdd} />
