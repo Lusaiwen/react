@@ -1,0 +1,12 @@
+
+.main {
+    width: 800px;
+    margin: 0 auto;
+}
+
+
+.container {
+    height: 600px;
+    position: relative;
+    overflow: hidden;
+}
