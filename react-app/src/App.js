@@ -4,7 +4,7 @@ import {
     Link,
     Redirect,
 } from 'react-router-dom';
-import RouteGuard from './RouteGuard';
+import RouteGuard from './components/common/RouteGuard';
 
 function Page1() {
     return (
