@@ -1,66 +1,54 @@
 import React from 'react';
 import {
-    BrowserRouter as Router,
     Route,
     Link,
     Redirect,
-    Switch,
 } from 'react-router-dom';
-import ProtectRoute from './ProtectRoute'
-import loginInfo from './loginInfo'
+import RouteGuard from './RouteGuard';
 
-function Home() {
+function Page1() {
     return (
         <div>
-            <h1>首页</h1>
+            <h1>Page1</h1>
         </div>
     );
 }
 
-function Personal() {
+function Page2() {
     return (
         <div>
-            <h1>个人中心</h1>
-        </div>
-    );
-}
-
-function Login(props) {
-    return (
-        <div>
-            <h1>登陆页面</h1>
-            <button onClick={() => {
-                loginInfo.isLogin = true;
-                if(props.location.state){
-                    props.history.push(props.location.state)
-                }else {
-                    props.history.push("/");
-                }
-            }}>登录</button>
+            <h1>Page2</h1>
         </div>
     );
 }
 
 export default function App() {
     return (
-        <Router>
+        <RouteGuard
+        onBeforeChange = {(prev, cur, action, commit, unBlock) => {
+            console.log(`用户从${prev.pathname}跳转到${cur.pathname},跳转方式为${action}`);
+            commit(true);
+            unBlock();
+        }}
+            onChange={(prev, cur, action, unListen) => {
+                console.log(
+                    `日志: 从页面${prev.pathname}进入页面${cur.pathname}, 进入方式${action}`
+                );
+                // unListen();
+            }}
+        >
             <ul>
                 <li>
-                    <Link to="/">首页</Link>
+                    <Link to="/page1">页面1</Link>
                 </li>
                 <li>
-                    <Link to="/login">登录</Link>
-                </li>
-                <li>
-                    <Link to="/personal">个人中心</Link>
+                    <Link to="/page2">页面2</Link>
                 </li>
             </ul>
 
-            <Switch>
-                <Route path="/login" component={Login}></Route>
-                <ProtectRoute path="/personal" component={Personal}></ProtectRoute>
-                <Route path="/" component={Home} />
-            </Switch>
-        </Router>
+            <Route path="/page1" component={Page1} />
+            <Route path="/page2" component={Page2} />
+            <Redirect to="/page1" component={Page1} />
+        </RouteGuard>
     );
 }
