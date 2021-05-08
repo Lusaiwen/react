@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import loginInfo from "./loginInfo";
+import loginInfo from "../../../loginInfo";
 
 export default function ProtectRoute({component: Component, render, children, ...rest}) {
     console.log(rest);

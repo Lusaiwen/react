@@ -6,7 +6,7 @@ import {
     Redirect,
     Switch,
 } from 'react-router-dom';
-import ProtectRoute from './ProtectRoute'
+import ProtectRoute from './components/common/ProtectRoute'
 import loginInfo from './loginInfo'
 
 function Home() {
