@@ -1,12 +1,33 @@
 
-.main {
-    width: 800px;
+.page {
+    width: 2500px;
     margin: 0 auto;
 }
 
 
-.container {
-    height: 600px;
-    position: relative;
-    overflow: hidden;
+.page1 {
+    background-color: lightblue;
+}
+
+.page2 {
+    background-color: lightgreen;
+}
+
+.nav {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: lightpink;
+}
+
+.nav a{
+    text-decoration: none;
+    padding: 20px;
+    display: block;
+    color: #fff;
+}
+
+.nav a.active {
+    color: red;
 }

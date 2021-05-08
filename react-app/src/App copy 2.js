@@ -5,7 +5,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom"
 import "./App.css"
 // import withScroll from './WithScroll'
-import useScroll from './components/common/resetScroll'
+import useScroll from './useScroll'
 
 function Page1(props) {
     useScroll(props.location.pathname)
