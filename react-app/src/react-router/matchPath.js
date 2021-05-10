@@ -10,8 +10,7 @@ import { pathToRegexp } from 'path-to-regexp';
  * @param {*} options 参数: strict, exact, sensitive
  */
 
-export default function matchPath(path , options) {
-    const pathname = window.location.pathname;
+export default function matchPath(path, pathname,  options) {
     const keys = [];
     console.log(getOptions(options));
     const regExp = pathToRegexp(path, keys, getOptions(options));
@@ -63,6 +62,6 @@ function getOptions(options) {
     };
 }
 
-const result = matchPath('/news/:id');
+const result = matchPath('/news/:id', '/news/123');
 
 console.log(result);
