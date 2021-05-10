@@ -33,11 +33,6 @@ class Prompt extends Component {
         }
     }
 
-
-
-
-
-
     render() {
         return null;
     }
