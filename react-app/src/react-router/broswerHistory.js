@@ -9,11 +9,11 @@ window.his.listen((location, action) => {
 });
 
 
-window.unblock = window.his.block(({ action, location, retry }) => {
-    console.log(action, location, retry);
+window.unblock = window.his.block((tx) => {
+    console.log(tx);
     if(window.confirm('是否真的要进入')){
         window.unblock();
-        retry();
+        tx.retry();
     }
     // A transition was blocked!
   });
