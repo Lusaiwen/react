@@ -205,35 +205,6 @@ function createLocation(basename = '') {
  * @param {*} basename
  */
 function createLoactionFromPath(pathInfo, basename) {
-    // //取出pathname
-    // let pathname = pathInfo.path.replace(/[#?].*$/, "");
-    // //处理basename的情况
-    // let reg = new RegExp(`^${basename}`);
-    // pathname = pathname.replace(reg, "");
-    // //search
-    // var questionIndex = pathInfo.path.indexOf("?");
-    // var sharpIndex = pathInfo.path.indexOf("#");
-    // let search;
-    // if (questionIndex === -1 || questionIndex > sharpIndex) {
-    //     search = "";
-    // }
-    // else {
-    //     search = pathInfo.path.substring(questionIndex, sharpIndex);
-    // }
-    // //hash
-    // let hash;
-    // if (sharpIndex === -1) {
-    //     hash = "";
-    // }
-    // else {
-    //     hash = pathInfo.path.substr(sharpIndex);
-    // }
-    // return {
-    //     hash,
-    //     pathname,
-    //     search,
-    //     state: pathInfo.state
-    // }
     const location = {
         search: '',
         hash: '',

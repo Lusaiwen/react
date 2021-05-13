@@ -1,4 +1,4 @@
-import pathToRegexp from "path-to-regexp";
+import { pathToRegexp } from 'path-to-regexp';
 
 /**
  * 得到匹配结果（match对象），如果没有匹配，返回null
@@ -7,7 +7,7 @@ import pathToRegexp from "path-to-regexp";
  * @param {*} options 相关配置，该配置是一个对象，该对象中，可以出现：exact、sensitive、strict
  */
 export default function matchPath(path, pathname, options) {
-    const keys = [];//保存路径规则中的关键字
+    const keys = []; //保存路径规则中的关键字
     const regExp = pathToRegexp(path, keys, getOptions(options));
     const result = regExp.exec(pathname); //匹配url地址
     if (!result) {
@@ -21,32 +21,32 @@ export default function matchPath(path, pathname, options) {
         isExact: pathname === result[0],
         params,
         path,
-        url: result[0]
+        url: result[0],
     };
 }
 
 /**
  * 将传入的react-router配置，转换为path-to-regexp的配置
- * @param {*} options 
+ * @param {*} options
  */
 function getOptions(options = {}) {
     const defaultOptions = {
         exact: false,
         sensitive: false,
-        strict: false
-    }
+        strict: false,
+    };
     const opts = { ...defaultOptions, ...options };
     return {
         sensitive: opts.sensitive,
         strict: opts.strict,
-        end: opts.exact
-    }
+        end: opts.exact,
+    };
 }
 
 /**
  * 根据匹配的分组结果，得到一个params对象
- * @param {*} groups 
- * @param {*} keys 
+ * @param {*} groups
+ * @param {*} keys
  */
 function getParams(groups, keys) {
     const obj = {};
