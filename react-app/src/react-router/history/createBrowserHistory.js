@@ -1,41 +1,35 @@
-import './ListenerManger';
-import ListenerManger from './ListenerManger';
-import BlockManger from './BlockManger';
+import ListenerManager from './ListenerManager';
+import BlockManager from './BlockManager';
 
 /**
- * 创建一个history api 对象
- * @returns
+ * 创建一个history api的history对象
+ * @param {*} options
  */
-
-function createBrowserHistory() {
-    const listenerManger = new ListenerManger();
-    const blockManger = new BlockManger();
-    const history = {
-        action: 'POP',
-        location: createLocation(),
-        block,
-        go,
-        back,
-        forward,
-        listen,
-        push,
-        replace,
-    };
+export default function createBrowserHistory(options = {}) {
+    const {
+        basename = '',
+        forceRefresh = false,
+        keyLength = 6,
+        getUserConfirmation = (message, callback) =>
+            callback(window.confirm(message)),
+    } = options;
+    const listenerManager = new ListenerManager();
+    const blockManager = new BlockManager(getUserConfirmation);
 
     function go(step) {
         window.history.go(step);
     }
-    function back() {
+    function goBack() {
         window.history.back();
     }
-    function forward() {
+    function goForward() {
         window.history.forward();
     }
 
     /**
-     *
-     * @param {*} path  路径
-     * @param {*} state 附加的状态数据
+     * 向地址栈中加入一个新的地址
+     * @param {*} path 新的地址，可以是字符串，也可以是对象
+     * @param {*} state 附加的状态数据，如果第一个参数是对象，该参数无效
      */
     function push(path, state) {
         changePage(path, state, true);
@@ -46,7 +40,7 @@ function createBrowserHistory() {
     }
 
     /**
-     * 抽离的push和replace函数
+     * 抽离的，可用于实现push或replace功能的方法
      * @param {*} path
      * @param {*} state
      * @param {*} isPush
@@ -56,28 +50,37 @@ function createBrowserHistory() {
         if (!isPush) {
             action = 'REPLACE';
         }
-
-        const pathInfo = handlePath(path, state);
-        const changeState = {
-            key: createKey(6),
-            state: pathInfo.state,
-        };
-
-        const location = createLocationFromPath(pathInfo);
-        console.log(location);
-        blockManger.triggerBlock(location, action, () => {
-            console.log(location);
+        const pathInfo = handlePathAndState(path, state, basename);
+        const location = createLoactionFromPath(pathInfo);
+        blockManager.triggerBlock(location, action, () => {
             if (isPush) {
-                window.history.pushState(changeState, null, pathInfo.path);
+                window.history.pushState(
+                    {
+                        key: createKey(keyLength),
+                        state: pathInfo.state,
+                    },
+                    null,
+                    pathInfo.path
+                );
             } else {
-                window.history.replaceState(changeState, null, pathInfo.path);
+                window.history.replaceState(
+                    {
+                        key: createKey(keyLength),
+                        state: pathInfo.state,
+                    },
+                    null,
+                    pathInfo.path
+                );
             }
-            console.log(location);
-            listenerManger.triggerListener(location, action);
+            listenerManager.triggerListener(location, action);
             //改变action
             history.action = action;
             //改变location
             history.location = location;
+            if (forceRefresh) {
+                //强制刷新
+                window.location.href = pathInfo.path;
+            }
         });
     }
 
@@ -87,60 +90,109 @@ function createBrowserHistory() {
     function addDomListener() {
         //popstate事件，仅能监听前进、后退、用户对地址hash的改变
         //无法监听到pushState、replaceState
-        window.addEventListener(
-            'popstate',
-            () => {
-                const location = createLocation();
-                const action = 'POP';
-                listenerManger.triggerListener(location, action);
+        window.addEventListener('popstate', () => {
+            const location = createLocation(basename);
+            const action = 'POP';
+            blockManager.triggerBlock(location, action, () => {
+                listenerManager.triggerListener(location, 'POP');
                 history.location = location;
-            },
-            false
-        );
+            });
+        });
     }
 
     addDomListener();
 
     /**
-     * 创建一个监听器，并且返回一个监听器函数
+     * 添加一个监听器，并且返回一个可用于取消监听的函数
      * @param {*} listener
      */
     function listen(listener) {
-        return listenerManger.addListener(listener);
+        return listenerManager.addListener(listener);
     }
 
-    /**
-     * 阻塞函数
-     * @param {*} prompt  函数
-     */
     function block(prompt) {
-        return blockManger.block(prompt);
+        return blockManager.block(prompt);
     }
 
+    function createHref(location) {
+        return basename + location.pathname + location.search + location.hash;
+    }
+
+    const history = {
+        action: 'POP',
+        createHref,
+        block,
+        length: window.history.length,
+        go,
+        goBack,
+        goForward,
+        push,
+        replace,
+        listen,
+        location: createLocation(basename),
+    };
+    //返回history对象
     return history;
 }
 
-function createLocation() {
+/**
+ * 根据path和state，得到一个统一的对象格式
+ * @param {*} path
+ * @param {*} state
+ */
+function handlePathAndState(path, state, basename) {
+    if (typeof path === 'string') {
+        return {
+            path,
+            state,
+        };
+    } else if (typeof path === 'object') {
+        let pathResult = basename + path.pathname;
+        let { search = '', hash = '' } = path;
+        if (search.charAt(0) !== '?') {
+            search = '?' + search;
+        }
+        if (hash.charAt(0) !== '#') {
+            hash = '#' + hash;
+        }
+        pathResult += search;
+        pathResult += hash;
+        return {
+            path: pathResult,
+            state: path.state,
+        };
+    } else {
+        throw new TypeError('path must be string or object');
+    }
+}
+
+/**
+ * 创建一个location对象
+ */
+function createLocation(basename = '') {
+    // window.location
+    let pathname = window.location.pathname;
+    //处理basename的情况
+    const reg = new RegExp(`^${basename}`);
+    pathname = pathname.replace(reg, '');
     const location = {
         hash: window.location.hash,
-        pathname: window.location.pathname,
         search: window.location.search,
+        pathname,
     };
-
+    //处理state
     let state,
         historyState = window.history.state;
     if (historyState === null) {
         state = undefined;
+    } else if (typeof historyState !== 'object') {
+        state = historyState;
     } else {
-        if (typeof historyState !== 'object') {
-            state = historyState;
+        if ('key' in historyState) {
+            location.key = historyState.key;
+            state = historyState.state;
         } else {
-            if ('key' in historyState) {
-                location.key = historyState.key;
-                state = historyState.state;
-            } else {
-                state = historyState;
-            }
+            state = historyState;
         }
     }
     location.state = state;
@@ -148,10 +200,40 @@ function createLocation() {
 }
 
 /**
- * 根据跳转的路径生成location对象
- * @param {*} pathInfo
+ * 根据pathInfo得到一个location对象
+ * @param {*} pathInfo  {path:"/news/asdf#aaaaaa?a=2&b=3", state:状态}
+ * @param {*} basename
  */
-function createLocationFromPath(pathInfo) {
+function createLoactionFromPath(pathInfo, basename) {
+    // //取出pathname
+    // let pathname = pathInfo.path.replace(/[#?].*$/, "");
+    // //处理basename的情况
+    // let reg = new RegExp(`^${basename}`);
+    // pathname = pathname.replace(reg, "");
+    // //search
+    // var questionIndex = pathInfo.path.indexOf("?");
+    // var sharpIndex = pathInfo.path.indexOf("#");
+    // let search;
+    // if (questionIndex === -1 || questionIndex > sharpIndex) {
+    //     search = "";
+    // }
+    // else {
+    //     search = pathInfo.path.substring(questionIndex, sharpIndex);
+    // }
+    // //hash
+    // let hash;
+    // if (sharpIndex === -1) {
+    //     hash = "";
+    // }
+    // else {
+    //     hash = pathInfo.path.substr(sharpIndex);
+    // }
+    // return {
+    //     hash,
+    //     pathname,
+    //     search,
+    //     state: pathInfo.state
+    // }
     const location = {
         search: '',
         hash: '',
@@ -159,8 +241,11 @@ function createLocationFromPath(pathInfo) {
         state: pathInfo.state,
     };
     let path = pathInfo.path;
+    let reg = new RegExp(`^${basename}`);
+
     //不含search和hash
     if (path.indexOf('?') === -1 && path.indexOf('#') === -1) {
+        path = path.replace(reg, '');
         location.pathname = path;
         return location;
     }
@@ -175,6 +260,7 @@ function createLocationFromPath(pathInfo) {
             location.hash = path.substring(hashIndex, questionIndex);
         }
         location.pathname = path.substring(0, hashIndex);
+        location.pathname = location.pathname.replace(reg, '');
     } else {
         //  /news?search=1#hash
         location.hash = path.substring(hashIndex, path.length);
@@ -182,55 +268,24 @@ function createLocationFromPath(pathInfo) {
             location.search = path.substring(questionIndex, hashIndex);
         }
         location.pathname = path.substring(0, questionIndex);
+        location.pathname = location.pathname.replace(reg, '');;
     }
 
     return location;
 }
 
-function handlePath(path, state) {
-    if (typeof path === 'string') {
-        return {
-            path,
-            state,
-        };
-    } else if (typeof path === 'object') {
-        let { pathname = '', hash = '', search = '', state = null } = path;
-        if (hash.charAt(0) !== '#') {
-            hash = '#' + hash;
-        }
-        if (search.charAt(0) !== '?') {
-            search = '?' + search;
-        }
-        pathname = pathname + hash;
-        pathname = pathname + search;
-        return {
-            path: pathname,
-            state: state,
-        };
-    }
+window.createLoactionFromPath = createLoactionFromPath;
+
+/**
+ * 产生一个指定长度的随机字符串，随机字符串中可以包含数字和字母
+ * @param {*} keyLength
+ */
+function createKey(keyLength) {
+    return Math.random().toString(36).substr(2, keyLength);
 }
 
-function createKey(length = 6) {
-    return Math.random().toString(36).substr(2, length);
-}
+window.myHis = createBrowserHistory();
 
-window.myHistory = createBrowserHistory();
+window.unBlock = window.myHis.block('确认跳转吗');
 
-window.unBlock = window.myHistory.block((tx) => {
-    console.log(tx);
-    if (window.confirm('是否真的要进入')) {
-        window.unBlock();
-        tx.retry();
-    } else {
-        console.log('取消跳转');
-    }
-    // A transition was blocked!
-});
 
-console.log(window.unBlock);
-
-window.myHistory.listen((location, action) => {
-    console.log('地址变化了', location, action);
-});
-
-export default createBrowserHistory;

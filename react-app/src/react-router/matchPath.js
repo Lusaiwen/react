@@ -1,40 +1,53 @@
-import { pathToRegexp } from 'path-to-regexp';
+import pathToRegexp from "path-to-regexp";
 
 /**
- * 得到匹配结果(match对象)
- * 如果不能匹配，返回undefined
- * 如果可以匹配，匹配结果是一个对象，该对象中属性名对应路径规则中的关键字
- *
- * @param {*} path
- * @param {*} pathname
- * @param {*} options 参数: strict, exact, sensitive
+ * 得到匹配结果（match对象），如果没有匹配，返回null
+ * @param {*} path 路径规则
+ * @param {*} pathname 真实的地址
+ * @param {*} options 相关配置，该配置是一个对象，该对象中，可以出现：exact、sensitive、strict
  */
-
-export default function matchPath(path, pathname,  options) {
-    const keys = [];
+export default function matchPath(path, pathname, options) {
+    const keys = [];//保存路径规则中的关键字
     const regExp = pathToRegexp(path, keys, getOptions(options));
-    let result = regExp.exec(pathname);
-
+    const result = regExp.exec(pathname); //匹配url地址
     if (!result) {
-        return;
+        return null; //没有匹配
     }
+    //匹配了
     let groups = Array.from(result);
-    groups = groups.splice(1);
+    groups = groups.slice(1); //得到匹配的分组结果
     const params = getParams(groups, keys);
     return {
         isExact: pathname === result[0],
         params,
         path,
-        url: result[0],
+        url: result[0]
     };
 }
 
 /**
- * 根据分组结果和key得到params对象
- * @param {*} groups 分组结果
- * @param {*} keys 关键字
+ * 将传入的react-router配置，转换为path-to-regexp的配置
+ * @param {*} options 
  */
+function getOptions(options = {}) {
+    const defaultOptions = {
+        exact: false,
+        sensitive: false,
+        strict: false
+    }
+    const opts = { ...defaultOptions, ...options };
+    return {
+        sensitive: opts.sensitive,
+        strict: opts.strict,
+        end: opts.exact
+    }
+}
 
+/**
+ * 根据匹配的分组结果，得到一个params对象
+ * @param {*} groups 
+ * @param {*} keys 
+ */
 function getParams(groups, keys) {
     const obj = {};
     for (let i = 0; i < groups.length; i++) {
@@ -44,23 +57,3 @@ function getParams(groups, keys) {
     }
     return obj;
 }
-
-function getOptions(options) {
-    const defalutOptions = {
-        sensitive: false,
-        strict: false,
-        exact: false,
-    };
-    const opts = { ...defalutOptions, ...options };
-    return {
-        sensitive: opts.sensitive,
-        strict: opts.strict,
-        exact: opts.exact,
-        end: opts.exact,
-    };
-}
-
-const result = matchPath('/news/:id', '/news/123');
-
-console.log(result);
-
