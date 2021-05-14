@@ -255,8 +255,8 @@ function createKey(keyLength) {
     return Math.random().toString(36).substr(2, keyLength);
 }
 
-window.myHis = createBrowserHistory();
+// window.myHis = createBrowserHistory();
 
-window.unBlock = window.myHis.block('确认跳转吗');
+// window.unBlock = window.myHis.block('确认跳转吗');
 
 

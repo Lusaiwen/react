@@ -1,15 +1,21 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from './react-router-dom';
-// import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, withRouter } from './react-router-dom';
+// import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom';
 
 function Page1() {
     return <div>page1</div>;
 }
 
-function Page2() {
-    return <div>page2</div>;
+function Page2({history}) {
+    return <div>page2
+        <button onClick={() => {
+            history.push('/page1')
+        }}>跳转page1</button>
+    </div>;
 }
+
+const Page2Wrapper = withRouter(Page2);
 
 function Change({ history }) {
     return (
@@ -37,7 +43,7 @@ export default function App() {
         <Router>
             <Switch>
                 <Route path="/page1" component={Page1} />
-                <Route path="/page2" component={Page2} />
+                <Route path="/page2" component={Page2Wrapper} />
                 <Route path="/" component={Change} />
             </Switch>
         </Router>
