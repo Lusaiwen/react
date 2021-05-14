@@ -26,33 +26,17 @@ export default class Router extends Component {
         this.unListen();
     }
 
-    //上下文对象
-    ctxValue = {};
+    
 
     render() {
-        this.ctxValue.history = this.props.history;
-        this.ctxValue.location = this.state.location;
-        this.ctxValue.match = matchPath('/', this.state.location.pathname);
+        const ctxValue = {
+            history: this.props.history,
+            location: this.state.location,
+            match: matchPath('/', this.state.location.pathname)
+        }
         return (
-            <ctx.Provider value={this.ctxValue}>
+            <ctx.Provider value={ctxValue}>
                 {this.props.children}
-
-                <h1>{this.ctxValue.location.pathname}</h1>
-                <button
-                    onClick={() => {
-                        this.props.history.push('/abc');
-                    }}
-                >
-                    跳转abc
-                </button>
-
-                <button
-                    onClick={() => {
-                        this.props.history.push('/123');
-                    }}
-                >
-                    跳转123
-                </button>
             </ctx.Provider>
         );
     }
