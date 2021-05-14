@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route } from './react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from './react-router-dom';
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 function Page1() {
@@ -35,9 +35,11 @@ function Change({ history }) {
 export default function App() {
     return (
         <Router>
-            <Route path="/page1" component={Page1} />
-            <Route path="/page2" component={Page2} />
-            <Route path='/' component={Change}/>
+            <Switch>
+                <Route path="/page1" component={Page1} />
+                <Route path="/page2" component={Page2} />
+                <Route path="/" component={Change} />
+            </Switch>
         </Router>
     );
 }
