@@ -3,6 +3,8 @@ import ctx from '../react-router/routerContext';
 import  {parsePath} from 'history'
 
 export default function Link(props) {
+
+    const {to, ...rest} = props;
     return (
         <ctx.Consumer>
             {(value) => {
@@ -14,7 +16,7 @@ export default function Link(props) {
                 }
                 const href = value.history.createHref(location);
                 return (
-                    <a href={href} onClick={e => {
+                    <a {...rest} href={href} onClick={e => {
                         e.preventDefault();
                         value.history.push(href);
                     }}>

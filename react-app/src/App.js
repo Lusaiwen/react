@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Link } from './react-router-dom';
+import { BrowserRouter as Router, Route, Link,NavLink } from './react-router-dom';
 
 
 function Page1() {
@@ -28,14 +28,14 @@ export default function App() {
         <Router>
             <ul>
                 <li>
-                    <Link to={{
+                    <NavLink to={{
                         pathname: '/page1',
                         search: '?',
                         hash: '#'
-                    }}>page1</Link>
+                    }}>page1</NavLink>
                 </li>
                 <li>
-                    <Link to="/page2?search=1#hash">page2</Link>
+                    <NavLink to="/page2?search=1#hash">page2</NavLink>
                 </li>
             </ul>
             <Route path="/page1" component={Page1} />
