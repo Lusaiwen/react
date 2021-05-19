@@ -1,12 +1,18 @@
-import { createStore } from 'redux';
-import reducer from './reducer/index';
-import { createAddUserAction, createDeleteUserAction, createUpdateUser } from './action/userAction';
+// import { createStore } from 'redux';
+import { createStore } from '../redux-yuan';
+import {
+    createAddUserAction,
+    createDeleteUserAction,
+    createUpdateUser
+} from './action/userAction';
+import reducer from './reducer';
 
 const store = createStore(reducer);
 
-store.subscribe(() => {
+console.log(store.getState());
+const unListen = store.subscribe(() => {
     console.log(store.getState());
-})
+});
 
 store.dispatch(
     createAddUserAction({
@@ -15,9 +21,9 @@ store.dispatch(
     })
 );
 
-store.dispatch(
-    createDeleteUserAction(1)
-);
+unListen();
+
+store.dispatch(createDeleteUserAction(1));
 
 store.dispatch(
     createUpdateUser({
@@ -25,3 +31,5 @@ store.dispatch(
         name: 'vdsfds'
     })
 );
+
+console.log(store);

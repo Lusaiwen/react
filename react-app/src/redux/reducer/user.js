@@ -17,7 +17,6 @@ export default (state = initialState, { type, payload }) => {
         case UserAction.ADDUSER:
             return [...state, payload];
         case UserAction.DELETEUSER:
-            console.log(payload);
             return state.filter((it) => it.id !== payload);
         case UserAction.UPDATEUSER:
             return state.map((it) =>
