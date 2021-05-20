@@ -1,6 +1,8 @@
 import loginUser from './loginUser';
 import user from './user';
-import { combineReducers } from 'redux';
+// import { combineReducers } from 'redux';
+import { combineReducers } from '../../redux-yuan';
+
 
 // export default function reducer(state = {}, action) {
 //     const newState = {
@@ -10,6 +12,8 @@ import { combineReducers } from 'redux';
 
 //     return newState;
 // }
+
+
 
 export default combineReducers({
     loginUser: loginUser,

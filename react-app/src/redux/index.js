@@ -11,8 +11,6 @@ const store = createStore(reducer);
 
 console.log(store.getState());
 
-
-
 const actionCreators = {
     createAddUserAction,
     createDeleteUserAction,

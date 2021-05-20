@@ -1,17 +1,5 @@
-/**
- * 判断obj是否为平面对象
- * @param {*} obj
- */
-function isPlain(obj) {
-    if (typeof obj !== 'object') {
-        return false;
-    }
-    return Object.getPrototypeOf(obj) === Object.prototype;
-}
-
-function getRandomString(length) {
-    return Math.random().toString(36).substr(2, length).split('').join('.');
-}
+import isPlainObject from './utils/isPlainObject';
+import ActionTypes from './utils/actionTypes';
 
 /**
  * 创建createStore
@@ -23,7 +11,7 @@ export default function createStore(reducer, defaultState) {
         currentState = defaultState;
     const listeners = [];
     function dispatch(action) {
-        if (!isPlain(action)) {
+        if (!isPlainObject(action)) {
             throw new TypeError('action must be a plain object');
         }
 
@@ -59,7 +47,7 @@ export default function createStore(reducer, defaultState) {
 
     //创建仓库时，需要分发一次初始的action
     dispatch({
-        type: `@@redux/INIT${getRandomString(7)}`
+        type: `@@redux/INIT${ActionTypes.INIT(6)}`
     });
 
     return {
