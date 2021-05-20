@@ -9,8 +9,8 @@ function isPlain(obj) {
     return Object.getPrototypeOf(obj) === Object.prototype;
 }
 
-function getRandomString(length){
-    return Math.random().toString(36).substr(2, length).split("").join(".");
+function getRandomString(length) {
+    return Math.random().toString(36).substr(2, length).split('').join('.');
 }
 
 /**
@@ -21,15 +21,14 @@ function getRandomString(length){
 export default function createStore(reducer, defaultState) {
     let currentReducer = reducer,
         currentState = defaultState;
-
     const listeners = [];
     function dispatch(action) {
         if (!isPlain(action)) {
-            throw TypeError('action must be a plain object');
+            throw new TypeError('action must be a plain object');
         }
 
         if (action.type === undefined) {
-            throw TypeError('action must have a property of type');
+            throw new TypeError('action must have a property of type');
         }
         currentState = currentReducer(currentState, action);
 

@@ -1,5 +1,5 @@
-// import { createStore } from 'redux';
-import { createStore } from '../redux-yuan';
+// import { createStore, bindActionCreators } from 'redux';
+import { createStore, bindActionCreators } from '../redux-yuan';
 import {
     createAddUserAction,
     createDeleteUserAction,
@@ -10,26 +10,33 @@ import reducer from './reducer';
 const store = createStore(reducer);
 
 console.log(store.getState());
+
+
+
+const actionCreators = {
+    createAddUserAction,
+    createDeleteUserAction,
+    createUpdateUser
+};
+
+const bindActions = bindActionCreators(actionCreators, store.dispatch);
 const unListen = store.subscribe(() => {
     console.log(store.getState());
 });
 
-store.dispatch(
-    createAddUserAction({
-        id: 3,
-        name: 'abc'
-    })
-);
+bindActions.createAddUserAction({
+    id: 3,
+    name: 'abc'
+});
 
-unListen();
+// unListen();
 
-store.dispatch(createDeleteUserAction(1));
 
-store.dispatch(
-    createUpdateUser({
-        id: 2,
-        name: 'vdsfds'
-    })
-);
+bindActions.createDeleteUserAction(1);
 
-console.log(store);
+
+bindActions.createUpdateUser({
+    id: 2,
+    name: 'fsdgfds'
+})
+
