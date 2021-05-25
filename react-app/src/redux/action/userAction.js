@@ -38,6 +38,7 @@ export function fetchaUsers() {
     //由于thunk的存在，可以使用函数方式
     return async function (dispatch, getState, extra) {
         dispatch(createSetLoadingAction(true));
+        console.log(extra);
         const res = await getAllStudents();
         const action = createSetUsersAction(res);
         dispatch(action);
