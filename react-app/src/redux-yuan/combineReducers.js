@@ -10,7 +10,6 @@ function validateReducers(reducers) {
         throw new TypeError('reducer must be a plain object');
     }
 
-    console.log(reducers);
 
     /** 
      * @@redux/INIT2.f.b.9.2.5
