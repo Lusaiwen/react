@@ -1,5 +1,6 @@
 // import { createStore, bindActionCreators } from 'redux';
-import { createStore, bindActionCreators } from '../redux-yuan';
+// import { createStore, bindActionCreators } from '../redux-yuan';
+import { createStore, bindActionCreators, applyMiddleware} from 'redux'
 import {
     createAddUserAction,
     createDeleteUserAction,
@@ -7,7 +8,25 @@ import {
 } from './action/userAction';
 import reducer from './reducer';
 
-const store = createStore(reducer);
+
+const logger1 = store => next => action => {
+    console.log('中间件1');
+    console.log('旧数据', store.getState());
+    next(action);
+    console.log('中间件1新数据', store.getState());
+    console.log("");
+}
+
+const logger2 = store => next => action => {
+    console.log('中间件2');
+    console.log('旧数据', store.getState());
+    next(action);
+    console.log('中间件2新数据', store.getState());
+}
+
+
+// const store = createStore(reducer, applyMiddleware(logger1, logger2));
+const store = applyMiddleware(logger1, logger2)(createStore)(reducer);
 
 console.log(store.getState());
 
