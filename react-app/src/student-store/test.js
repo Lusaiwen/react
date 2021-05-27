@@ -1,14 +1,20 @@
 import store from './index';
-import { createChangeAction } from './action/student/searchCondition';
-import { fetchStudents} from './action/student/searchResult'
+import { increase, decrease, asyncIncrease, asyncDecrease } from './action/counter';
 
-// store.dispatch(
-//     createChangeAction({
-//         key: '',
-//         sex: -1,
-//         page: 1,
-//         limit: 100
-//     })
-// );
+window.increase = function () {
+    store.dispatch(increase());
+};
 
-store.dispatch(fetchStudents())
+window.decrease = function () {
+    store.dispatch(decrease());
+};
+
+
+window.asyncIncrease = function () {
+    store.dispatch(asyncIncrease())
+}
+
+
+window.asyncDecrease = function (){
+    store.dispatch(asyncDecrease())
+}

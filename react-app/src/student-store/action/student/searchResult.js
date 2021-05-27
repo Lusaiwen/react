@@ -1,4 +1,4 @@
-import { getSearchStudents } from '../../../services/student';
+
 
 export const actionTypes = {
     setStuAndTotal: Symbol('setStuAndTotal'),
@@ -34,16 +34,5 @@ export function setIsLoading(isLoading) {
     return {
         type: actionTypes.setIsLoading,
         payload: isLoading
-    };
-}
-
-export function fetchStudents() {
-    return async function (dispatch, getState, extra) {
-        const condition = getState().students.condition;
-        console.log(condition);
-        dispatch(setIsLoading(true));
-        const result = await getSearchStudents(condition);
-        dispatch(setStuAndTotal(result.datas, result.cont));
-        dispatch(setIsLoading(false));
     };
 }
