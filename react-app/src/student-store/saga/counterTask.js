@@ -1,16 +1,25 @@
-import { take, takeEvery } from 'redux-saga/effects';
-import { actionTypes } from '../action/counter';
+import { cancel, delay, fork, put, take } from 'redux-saga/effects';
+import { actionTypes, increase } from '../action/counter';
 
-function* asyncIncrease() {
-    console.log('asyncIncrease触发了');
-}
+let isStop = false;
 
-function * asyncDecrease(){
-    console.log('asyncDecrease触发了');
+/**
+ *流程控制
+ *
+ */
+function* autoTask() {
+    yield take(actionTypes.autoIncrease);
+    const task = yield fork(function* () {
+        while (true) {
+            yield delay(2000);
+            yield put(increase());
+        }
+    });
+    yield take(actionTypes.stopAutoIncrease);
+    yield cancel(task);
 }
 
 export default function* counterTask() {
-    yield takeEvery(actionTypes.asyncIncrease, asyncIncrease);
-    yield takeEvery(actionTypes.asyncDecrease, asyncDecrease);
-    console.log('正在监听asyncIncrease, asyncDecreased');
+    yield fork(autoTask);
+    console.log('正在监听autoIncrease');
 }

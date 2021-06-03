@@ -1,31 +1,44 @@
-export const  actionTypes = {
+export const actionTypes = {
     increase: Symbol('increase'),
-    decrease:Symbol('decrease'),
+    decrease: Symbol('decrease'),
     asyncIncrease: Symbol('async-increse'),
-    asyncDecrease: Symbol('async-decrease')
-}
+    asyncDecrease: Symbol('async-decrease'),
+    autoIncrease: Symbol("auto-increase"), //自动增加
+    stopAutoIncrease: Symbol("stop-auto-increase") //停止自动增加
+};
 
-export function increase(){
+export function increase() {
     return {
         type: actionTypes.increase
-    }
+    };
 }
 
-export function decrease(){
+export function decrease() {
     return {
         type: actionTypes.decrease
-    }
+    };
 }
 
-
-export function asyncIncrease(){
+export function asyncIncrease() {
     return {
         type: actionTypes.asyncIncrease
-    }
+    };
 }
 
-export function asyncDecrease(){
+export function asyncDecrease() {
     return {
         type: actionTypes.asyncDecrease
-    }
+    };
+}
+
+export function autoIncrease() {
+    return {
+        type: actionTypes.autoIncrease
+    };
+}
+
+export function stopAutoIncrease() {
+    return {
+        type: actionTypes.stopAutoIncrease
+    };
 }

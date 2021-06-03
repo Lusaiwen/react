@@ -2,8 +2,16 @@
 
 export const actionTypes = {
     setStuAndTotal: Symbol('setStuAndTotal'),
-    setIsLoading: Symbol('setIsLoading')
+    setIsLoading: Symbol('setIsLoading'),
+    fetchStudents: Symbol('fetchStudents')
 };
+
+export function fetchStudents(){
+    return {
+        type: actionTypes.fetchStudents
+    }
+}
+
 
 /**
  *设置学生数组和总数的action
