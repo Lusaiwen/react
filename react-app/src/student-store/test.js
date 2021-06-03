@@ -5,9 +5,14 @@ import {
     asyncIncrease,
     asyncDecrease,
     autoIncrease,
-    stopAutoIncrease
+    stopAutoIncrease,
+    add
 } from './action/counter';
 import { fetchStudents } from './action/student/searchResult';
+
+window.add = function (number){
+    store.dispatch(add(number))
+}
 
 window.stopAutoIncrease = function () {
     store.dispatch(stopAutoIncrease());

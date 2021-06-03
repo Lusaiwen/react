@@ -1,5 +1,5 @@
 import { cancel, delay, fork, put, take } from 'redux-saga/effects';
-import { actionTypes, increase } from '../action/counter';
+import { autoIncrease,increase, stopAutoIncrease } from '../action/counter';
 
 let isStop = false;
 
@@ -8,14 +8,14 @@ let isStop = false;
  *
  */
 function* autoTask() {
-    yield take(actionTypes.autoIncrease);
+    yield take(autoIncrease.toString());
     const task = yield fork(function* () {
         while (true) {
             yield delay(2000);
             yield put(increase());
         }
     });
-    yield take(actionTypes.stopAutoIncrease);
+    yield take(stopAutoIncrease.toString());
     yield cancel(task);
 }
 

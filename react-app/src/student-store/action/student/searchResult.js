@@ -1,46 +1,27 @@
+import { createActions, handleActions } from 'redux-actions';
+
+const actions = createActions({
+    SET_STU_AND_TOTAL: (stus, total) => {
+        return { datas: stus, total: total };
+    },
+    SET_IS_LOADING: (isLoading) => isLoading,
+    FETCH_STUDENTS: null
+});
 
 
-export const actionTypes = {
-    setStuAndTotal: Symbol('setStuAndTotal'),
-    setIsLoading: Symbol('setIsLoading'),
-    fetchStudents: Symbol('fetchStudents')
-};
+export const { setStuAndTotal, setIsLoading, fetchStudents } = actions;
 
-export function fetchStudents(){
-    return {
-        type: actionTypes.fetchStudents
+export default handleActions(
+    {
+        [setIsLoading]: (state, action) => ({
+            ...state,
+            isLoading: action.payload
+        }),
+        [setStuAndTotal]: (state, action) => ({ ...state, ...action.payload })
+    },
+    {
+        datas: [],
+        total: 0,
+        isLoading: false
     }
-}
-
-
-/**
- *设置学生数组和总数的action
- *
- * @export
- * @param {*} stus
- * @param {*} total
- * @returns
- */
-export function setStuAndTotal(stus, total) {
-    return {
-        type: actionTypes.setStuAndTotal,
-        payload: {
-            datas: stus,
-            total: total
-        }
-    };
-}
-
-/**
- *设置正在加载中的action
- *
- * @export
- * @param {*} isLoading
- * @returns
- */
-export function setIsLoading(isLoading) {
-    return {
-        type: actionTypes.setIsLoading,
-        payload: isLoading
-    };
-}
+);

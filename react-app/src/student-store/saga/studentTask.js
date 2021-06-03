@@ -1,6 +1,6 @@
 import { takeEvery, put, call, select } from 'redux-saga/effects';
 import {
-    actionTypes,
+    fetchStudents,
     setIsLoading,
     setStuAndTotal
 } from '../action/student/searchResult';
@@ -20,6 +20,6 @@ function* fetchStudent() {
 }
 
 export default function* studentTask() {
-    yield takeEvery(actionTypes.fetchStudents, fetchStudent);
+    yield takeEvery(fetchStudents.toString(), fetchStudent);
     console.log('正在监听fetchStudent ...');
 }
