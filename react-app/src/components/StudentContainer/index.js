@@ -37,18 +37,25 @@ export default function StudentContainer() {
             />
 
             <p>
-            每页显示的条数
-            <input type="number" value={limit}  onChange= {e => {
-                setLimit(e.target.value)
-            }} />
+                每页显示的条数
+                <input
+                    type="number"
+                    value={limit}
+                    onChange={(e) => {
+                        setLimit(e.target.value);
+                    }}
+                />
             </p>
             <p>
-            显示多少页数
-            <input type="number" value={pannerNumber}  onChange= {e => {
-                setpannerNumber(e.target.value)
-            }} />
+                显示多少页数
+                <input
+                    type="number"
+                    value={pannerNumber}
+                    onChange={(e) => {
+                        setpannerNumber(e.target.value);
+                    }}
+                />
             </p>
-            
         </div>
     );
 }

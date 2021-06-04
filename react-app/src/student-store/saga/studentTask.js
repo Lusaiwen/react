@@ -13,7 +13,7 @@ function* fetchStudent() {
     console.log(condition);
 
     //saga发现是一个promise，会等待返回结果
-    const resp = yield call(getSearchStudents);
+    const resp = yield call(getSearchStudents, condition);
     console.log(resp);
     yield put(setStuAndTotal(resp.datas, resp.cont));
     yield put(setIsLoading(false));

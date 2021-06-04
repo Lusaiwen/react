@@ -4,6 +4,7 @@ import './index.css';
 export default function StudentSearch(props) {
     const [search, setSearch] = useState('');
     const [sex, setSex] = useState(-1);
+    console.log(props);
 
     useEffect(() => {
         props.search && setSearch(props.search);
@@ -17,10 +18,11 @@ export default function StudentSearch(props) {
 
     function handleSearch(e) {
         setSearch(e.target.value);
+        const value = e.target.value;
         props.onSearch &&
             props.onSearch({
-                search: e.target.value,
-                sex: sex,
+                search: value,
+                sex: sex
             });
     }
 
