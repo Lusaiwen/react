@@ -20,9 +20,8 @@ export async function getSearchStudents({
     sex = -1,
     page = 1,
     size = 10,
-    search = '',
+    search = ''
 } = {}) {
-    console.log(search);
     if (search) {
         const resp = await fetch(
             `/api/student/findByPage?appkey=${appkey}&page=${page}&size=${size}&sex=${sex}&search=${search}`
@@ -30,10 +29,9 @@ export async function getSearchStudents({
             .then((res) => res.json())
             .then((res) => res.data);
         resp && (resp.datas = resp.findByPage) && delete resp.findByPage;
-        console.log(resp);
         return resp;
     } else {
-        const resp = await getStudentsByPage((page = 1), (size = 10));
+        const resp = await getStudentsByPage(page, size);
         resp && (resp.datas = resp.findByPage) && delete resp.findByPage;
         return resp;
     }

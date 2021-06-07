@@ -6,6 +6,11 @@ import { fetchStudents} from '../student-store/action/student/searchResult'
 import Loading from './Loading'
 import Pager from './common/Pager'
 import StudentTable from './StudentTable'
+import store from '../student-store'
+console.log('重新获取');
+store.dispatch(fetchStudents())
+
+
 //连接 StudentSearchBar
 let mapStateToProps = (state) => ({
         search: state.students.condition.search,
