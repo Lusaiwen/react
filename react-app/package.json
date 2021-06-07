@@ -47,5 +47,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://open.duyiedu.com"
+  "proxy": "http://open.duyiedu.com",
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.9"
+  }
 }
