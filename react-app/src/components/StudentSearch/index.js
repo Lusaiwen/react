@@ -16,13 +16,15 @@ export default function StudentSearch(props) {
         setSex(+e.target.value);
     }
 
-    function handleSearch(e) {
+    function handleChangeSearch(e) {
         setSearch(e.target.value);
-        const value = e.target.value;
+    }
+
+    function handleClick() {
         props.onSearch &&
             props.onSearch({
-                search: value,
-                sex: sex
+                search,
+                sex
             });
     }
 
@@ -30,7 +32,11 @@ export default function StudentSearch(props) {
         <div>
             <label>
                 请输入关键字：
-                <input type="text" value={search} onChange={handleSearch} />
+                <input
+                    type="text"
+                    value={search}
+                    onChange={handleChangeSearch}
+                />
             </label>
             <label>
                 不限
@@ -61,6 +67,9 @@ export default function StudentSearch(props) {
                     value={1}
                     onChange={handleChange}
                 />
+            </label>
+            <label>
+                <button onClick={handleClick}>查询</button>
             </label>
         </div>
     );

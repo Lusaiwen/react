@@ -41,6 +41,7 @@ function useResp(query) {
         })();
         return () => {};
     }, [query]);
+    console.log(resp);
     return resp;
 }
 
