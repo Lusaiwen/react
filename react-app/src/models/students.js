@@ -1,0 +1,9 @@
+const model = {
+    namespace: 'students',
+    state: {
+        datas: [],
+        total: 0
+    }
+}
+
+export default model;
