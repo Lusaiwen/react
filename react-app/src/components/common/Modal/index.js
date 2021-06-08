@@ -12,7 +12,7 @@ Modal.defaultProps = {
 Modal.propTypes = {
     bg: PropTypes.string,
     children: PropTypes.node,
-    onClose: types.onClose.isRequired
+    onClose: types.onClose
 }
 
 

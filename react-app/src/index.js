@@ -4,11 +4,16 @@ import dva from 'dva';
 import counterModel from './models/counter';
 import studentsModel from './models/students';
 import { createBrowserHistory } from 'history';
+import dvaPlugin from './myDvaPlugin';
+import createLoading from 'dva-loading';
 
 //得到一个dva对象
 const app = dva({
     history: createBrowserHistory()
 });
+
+app.use(dvaPlugin);
+app.use(createLoading());
 
 //
 app.model(counterModel);

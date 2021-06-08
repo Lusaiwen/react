@@ -2,6 +2,7 @@ import React from 'react';
 import './myHooks/useAllStudents';
 import Counter from './Counter';
 import { routerRedux, NavLink, Route, Switch } from 'dva/router';
+import dvaPlugin from './myDvaPlugin'
 
 function Home(){
     return <div>

@@ -22,14 +22,6 @@ const model = {
             yield call(delay, 2000);
             yield put({ type: 'decrease' });
         }
-    },
-    subscriptions: {
-        resizeWindow({ dispatch }) {
-            window.onresize = () => {
-                dispatch({ type: 'increase' });
-            };
-            console.log('窗口变化');
-        }
     }
 };
 
