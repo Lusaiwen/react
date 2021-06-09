@@ -18,27 +18,23 @@ export function getRoutes() {
       {
         "path": "/",
         "exact": true,
-        "component": require('@/pages/index.js').default
+        "component": require('@/pages/index.js').default,
+        "title": "首页",
+        "wrappers": [require('@/wrappers/HandleTitle').default]
       },
       {
-        "path": "/sub/a",
+        "path": "/login",
         "exact": true,
-        "component": require('@/pages/sub/a.js').default
+        "component": require('@/pages/login.js').default,
+        "title": "登录页",
+        "wrappers": [require('@/wrappers/HandleTitle').default]
       },
       {
-        "path": "/sub/b",
+        "path": "/welcome",
         "exact": true,
-        "component": require('@/pages/sub/b.js').default
-      },
-      {
-        "path": "/sub/detail/:id",
-        "exact": true,
-        "component": require('@/pages/sub/detail/[id].js').default
-      },
-      {
-        "path": "/sub",
-        "exact": true,
-        "component": require('@/pages/sub/index.js').default
+        "component": require('@/pages/welcome.js').default,
+        "title": "欢迎页",
+        "wrappers": [require('@/wrappers/IsLogin').default, require('@/wrappers/HandleTitle').default]
       },
       {
         "component": require('@/pages/404.js').default
