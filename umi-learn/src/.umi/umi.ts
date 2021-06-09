@@ -4,12 +4,12 @@ import '@@/core/devScripts';
 import { plugin } from './core/plugin';
 import './core/pluginRegister';
 import { createHistory } from './core/history';
-import { ApplyPluginsType } from 'C:/Users/MI/AppData/Local/Yarn/Data/global/node_modules/@umijs/runtime';
-import { renderClient } from 'C:/Users/MI/AppData/Local/Yarn/Data/global/node_modules/@umijs/renderer-react/dist/index.js';
+import { ApplyPluginsType } from 'C:/Users/MI/Desktop/学习/2021-01-12/react/react/umi-learn/node_modules/umi/node_modules/@umijs/runtime';
+import { renderClient } from 'C:/Users/MI/Desktop/学习/2021-01-12/react/react/umi-learn/node_modules/umi/node_modules/@umijs/renderer-react/dist/index.js';
 import { getRoutes } from './core/routes';
 
 
-
+require('../global.less');
 
 const getClientRender = (args: { hot?: boolean; routes?: any[] } = {}) => plugin.applyPlugins({
   key: 'render',

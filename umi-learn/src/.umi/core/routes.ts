@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React from 'react';
-import { ApplyPluginsType } from 'C:/Users/MI/AppData/Local/Yarn/Data/global/node_modules/@umijs/runtime';
+import { ApplyPluginsType } from 'C:/Users/MI/Desktop/学习/2021-01-12/react/react/umi-learn/node_modules/umi/node_modules/@umijs/runtime';
 import * as umiExports from './umiExports';
 import { plugin } from './plugin';
 
@@ -16,6 +16,13 @@ export function getRoutes() {
         "component": require('@/pages/404.js').default
       },
       {
+        "path": "/counter",
+        "exact": true,
+        "component": require('@/pages/counter.js').default,
+        "title": "计数器",
+        "wrappers": [require('@/wrappers/HandleTitle').default]
+      },
+      {
         "path": "/",
         "exact": true,
         "component": require('@/pages/index.js').default,
@@ -28,6 +35,11 @@ export function getRoutes() {
         "component": require('@/pages/login.js').default,
         "title": "登录页",
         "wrappers": [require('@/wrappers/HandleTitle').default]
+      },
+      {
+        "path": "/sub",
+        "exact": true,
+        "component": require('@/pages/sub/index.js').default
       },
       {
         "path": "/welcome",

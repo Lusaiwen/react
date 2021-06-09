@@ -18,7 +18,7 @@ function Login({history}) {
                         if (loginPwdRef.current.value === '123123') {
                             //登录成功
                             history.push('/welcome');
-                            const loginId = loginIdRef.current.value;
+                            const loginId = loginPwdRef.current.value;
                             localStorage.setItem('loginId', loginId);
                         }else {
                             alert('账号密码错误');

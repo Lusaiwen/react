@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { createBrowserHistory, History } from 'C:/Users/MI/AppData/Local/Yarn/Data/global/node_modules/@umijs/runtime';
+import { createBrowserHistory, History } from 'C:/Users/MI/Desktop/学习/2021-01-12/react/react/umi-learn/node_modules/umi/node_modules/@umijs/runtime';
 
 let options = {
   "basename": "/"
