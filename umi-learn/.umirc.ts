@@ -10,10 +10,10 @@ export default defineConfig({
     immer: true,
     hmr: false
   },
-//   proxy: {
-//     '/api': {
-//       target: 'http://open.duyiedu.com',
-//       changeOrigin: true
-//     }
-//   }
+  proxy: {
+    '/api': {
+      target: 'http://open.duyiedu.com',
+      changeOrigin: true
+    }
+  }
 });

@@ -1,15 +1,23 @@
 import React from 'react';
-import { Link } from 'umi';
-
-export default function IsLogin(props) {
-    const loginId = localStorage.getItem('loginId');
-    if (loginId) {
-        return <div>{props.children}</div>;
+import { connect } from 'umi';
+import { routerRedux } from 'dva';
+function IsLogin(props) {
+    if (props.loginId) {
+        return props.children;
     } else {
-        return (
-            <div>
-                <p>您还未登录<Link to='/login'>请登录</Link></p>
-            </div>
-        );
+        props.onNotLogin && props.onNotLogin();
+        return null;
     }
 }
+
+const mapStateToprops = (state) => ({
+    loginId: state.loginUser
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    onNotLogin() {
+        dispatch(routerRedux.push('/login'));
+    }
+});
+
+export default connect(mapStateToprops, mapDispatchToProps)(IsLogin);

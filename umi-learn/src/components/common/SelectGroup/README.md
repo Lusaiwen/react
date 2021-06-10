@@ -1,0 +1,18 @@
+**属性**
+
+1. value：选中的元素
+2. datas: 一个对象数组
+    1. value 值
+    2. text 文本
+```js
+[
+    { value: 'football', text: '足球' },
+    { value: 'basketball', text: '篮球' },
+    { value: 'movie', text: '电影' },
+    { value: 'music', text: '音乐' },
+    { value: 'other', text: '其他' },
+];
+```
+
+3. name： 每一个选择框的 name 属性
+4. onChange: 状态改变时发生的事件

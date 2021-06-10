@@ -1,17 +1,17 @@
 import React from 'react';
-import { NavLink } from 'umi';
-import './index.css'
+import Layout from '../components/Layout';
+import MenuContainer from '../components/containers/MenuContainer';
+import Aside from '../components/Aside';
+import styles from './index.css';
 export default function index(props) {
+    if (props.location.pathname === '/login') {
+        return props.children;
+    }
     return (
-        <div>
-            <div>
-                <NavLink exact to='/'>首页</NavLink>
-                <NavLink to='/login'>登录页</NavLink>
-                <NavLink to='welcome'>欢迎页</NavLink>
-                <NavLink to='/counter'>计数器</NavLink>
-            </div>
-            {props.children}
-            <div>页脚</div>
-        </div>
+        <Layout
+            header={<MenuContainer />}
+            aside={<Aside />}
+            main={<div className={styles.main}>{props.children}</div>}
+        />
     );
 }

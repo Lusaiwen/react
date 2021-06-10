@@ -1,0 +1,5 @@
+.banner-contanier {
+    position: relative;
+    border: 2px solid #000;
+    /* overflow: hidden; */
+}
